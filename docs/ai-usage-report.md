@@ -77,7 +77,9 @@ Claude selected the three features (one per required category) and wrote them:
 ## Responsible use
 
 - All AI-generated files are listed in the Usage Log.
-- AI-assisted commits carry an `Assisted-by: Claude (Sonnet 5)` line in the
-  commit message.
+- The commit "Fix mobile nav, refresh docs and AI usage log" and later commits
+  carry an `Assisted-by: Claude (Sonnet 5)` line. The earlier commits were made
+  before I added that line and do not carry it; the Assignment 2 code in them
+  was AI-assisted, as listed in the Usage Log above.
 - The AI Evidence ZIP (full conversations and the files as the AI produced
   them) is submitted on Blackboard and is not committed to this repository.
