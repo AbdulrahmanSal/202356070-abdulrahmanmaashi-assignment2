@@ -1,5 +1,5 @@
 # Abdulrahman Saleh Maashi — Personal Portfolio
-Live site: https://AbdulrahmanSal.github.io/202356070-abdulrahmanmaashi-assignment2
+Live site: https://github.com/AbdulrahmanSal/202356070-abdulrahmanmaashi-assignment2
 ## Project Description
 
 This project extends my Assignment 1 portfolio for Assignment 2: Interactive Features. It keeps the same About, Projects, Skills, and Contact sections and adds real interactivity on top: a project filter, a live API-backed widget, scroll animations, and clearer feedback throughout. The goal was to practice dynamic, JavaScript-driven behavior rather than a static page.
