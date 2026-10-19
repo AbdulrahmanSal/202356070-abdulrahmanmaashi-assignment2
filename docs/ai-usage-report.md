@@ -1,103 +1,83 @@
 # AI Usage Report
 
-## 1. Tools used and use cases
+## Usage Log
 
-| Tool | Where I used it |
-| --- | --- |
-| Claude (Anthropic) | Designing and building the three new interactive features, explaining specific implementation choices, and updating all three documentation files for Assignment 2 |
+The starting point for this assignment is my Assignment 1 portfolio, which was
+submitted separately under Assignment 1's rules. The log below covers AI use
+for Assignment 2 only.
 
-I gave Claude the Assignment 2 brief and my existing Assignment 1 repository
-as the starting point, as the brief requires. I asked for one feature from
-each required category — dynamic content, data handling, and animation —
-rather than every option listed, matching the brief's "choose one that fits"
-guidance. I picked the project filter, the public-API advice widget, and a
-scroll-reveal animation, then reviewed each piece as it was built rather than
-accepting the whole thing at once.
+| # | Tool | Date | Purpose | Files affected | What I changed |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Claude (Anthropic), Sonnet 5 | 2026-10-19 | Add the project filter buttons, dev-advice widget markup, scroll-reveal classes, and `<noscript>` fallback | `index.html` | Supplied the brief and required starting from my Assignment 1 site. Edits of mine: none |
+| 2 | Claude (Anthropic), Sonnet 5 | 2026-10-19 | Style the filter, advice widget, reveal animation, and card hover effect | `css/styles.css` | None |
+| 3 | Claude (Anthropic), Sonnet 5 | 2026-10-19 | Write the project filter, API fetch with timeout and `localStorage` fallback, and scroll-reveal observer | `js/script.js` | None |
+| 4 | Claude (Anthropic), Sonnet 5 | 2026-10-19 | Write the README, following the format I supplied from my Assignment 1 README | `README.md` | Provided the format to follow. Only edit of mine: added the live site link |
+| 5 | Claude (Anthropic), Sonnet 5 | 2026-10-19 | Write the technical documentation, following the format I supplied | `docs/technical-documentation.md` | Provided the format to follow. No edits of mine |
+| 6 | Claude (Anthropic), Sonnet 5 / 5.5 | 2026-10-19 | Draft this report, then revise it for the usage-log and declaration requirements | `docs/ai-usage-report.md` | None |
+| 7 | Claude (Anthropic), Sonnet 5 | 2026-10-19 | Recreate the favicon without embedded metadata | `assets/images/favicon.svg` | None |
+| 8 | Claude (Anthropic), Sonnet 5.5 | 2026-10-19 | Advice on a GitHub 403 push error (wrong account) and on adding the live link to the README | None (advice only) | Followed the steps myself |
+| 9 | Claude (Anthropic), Sonnet 5.5 | 2026-10-19 | Run automated browser tests; fix the phone navigation wrapping; re-crop the hotel screenshot so its thumbnail is not cut off; restore `.gitignore`; correct the documentation's testing notes | `css/styles.css`, `assets/images/project-1.png`, `.gitignore`, `docs/technical-documentation.md` | None |
 
-## 2. Benefits and challenges
+## Declaration
 
-### Benefits
+<!-- Replace with the exact statement from the assignment guidelines if it differs. -->
 
-- **Choosing a real public API quickly.** I didn't know which public APIs
-  are reliable, keyless, and CORS-enabled for a browser `fetch` call without
-  a backend. Claude suggested `api.adviceslip.com`, which fit the "fun
-  facts" example in the brief and didn't need an API key or server-side
-  proxy.
-- **Catching a failure mode I hadn't thought of.** I hadn't considered that
-  a `fetch` request could hang indefinitely rather than fail outright. The
-  `Promise.race` timeout pattern was new to me.
-- **Keeping the filter and the entrance animation from being two separate
-  systems.** My first instinct was to build the project-filter transitions
-  and the "fade in on page load" animation separately. Reusing one
-  `applyFilter('all')` call on page load for both was a simplification I
-  wouldn't have landed on alone.
+I, Abdulrahman Saleh Maashi (ID 202356070), declare that this submission is my
+own work, that every use of AI tools in it is listed in the Usage Log above,
+that I reviewed and understand all the code I am submitting and can explain it,
+and that the full AI conversations and intermediate artifacts are provided in
+the AI Evidence ZIP submitted on Blackboard.
 
-### Challenges
+**Name:** Abdulrahman Saleh Maashi
+**ID:** 202356070
+**Date:** 2026-10-19
 
-- **Scope creep risk.** The brief only requires one feature per category; it
-  would have been easy to end up with a page that looks over-engineered
-  given the brief's own note to focus on "interactivity and usability rather
-  than trying to build a perfect design." I kept the three features but
-  pushed back on adding more (no tabs, no live search) to stay within that
-  spirit.
-- **Understanding the animation timing before accepting it.** The
-  fade-out-then-hide sequencing on the project filter uses a 250ms
-  `setTimeout` that has to match the CSS transition duration exactly, or a
-  card would either flash hidden early or sit invisible-but-still-in-the-grid
-  for a moment. I asked for this to be explained rather than just trusting
-  that the numbers matched, since a mismatch wouldn't throw an error — it
-  would just look subtly wrong.
-- **Deciding what *not* to add.** Claude's first pass of suggestions included
-  more than the brief asks for; narrowing it to one feature per required
-  category was a decision I made, not something generated for me.
+## Tools used and use cases
 
-## 3. Learning outcomes
+Claude was used for code generation and documentation support. I gave it the
+Assignment 2 brief and asked it to extend my Assignment 1 site the same way.
+Claude selected the three features (one per required category) and wrote them:
 
-- **`Promise.race()` as a timeout pattern.** `fetch()` has no built-in
-  timeout option. Racing the real request against a `Promise` that rejects
-  after a fixed delay is a reusable pattern I hadn't needed before — if the
-  API hangs, the user still gets a timely error instead of a frozen "Loading…"
-  state.
-- **Why the one-frame delay matters for CSS transitions.** Removing `hidden`
-  and adding the class that triggers the transition in the exact same
-  tick lets the browser treat it as one state change instead of two, so the
-  animation never plays. Wrapping the class addition in
-  `requestAnimationFrame` forces the browser to paint the "hidden-but-not-yet-
-  faded-in" state first. I had not run into this before and would likely have
-  shipped a filter that visually "snapped" instead of faded.
-- **`IntersectionObserver.unobserve()`.** I learned that a reveal animation
-  that should only happen once needs to explicitly stop observing after it
-  fires, or it would (depending on options) keep responding to the element
-  scrolling in and out, which the assignment brief specifically warns against
-  ("avoid distracting or heavy effects").
-- **Reduced motion and no-JS are different problems.** I had assumed
-  `prefers-reduced-motion` alone would cover accessibility here. It doesn't
-  cover a visitor with JavaScript disabled entirely, since in that case the
-  class that reveals the content never gets added at all — the existing CSS
-  transition rule and the content actually being shown are two separate
-  concerns, which is why the site now also has a `<noscript>` fallback.
+- **Dynamic content:** a project filter (All / Java / Python / Verilog)
+- **Data handling:** a dev-advice widget that fetches from a public API, with
+  `localStorage` as a fallback
+- **Animation:** a scroll-reveal effect and a hover lift on project cards
 
-## 4. Responsible use and modifications
+## Benefits and challenges
 
-- **I chose the scope**, not Claude: one feature per required category,
-  explicitly declining to add more despite it being technically easy to pile
-  on additional interactivity, because the brief asks for focus over
-  polish.
-- **I chose the filter categories** (Java/Python/Verilog) to match my actual
-  three projects from Assignment 1, rather than generic placeholder tags.
-- **I asked for explanations**, not just working code, for the two trickiest
-  mechanics — the `Promise.race` timeout and the fade/hide timing — and can
-  account for both (see the Understanding check below).
-- **Documentation was reviewed and updated to match the real build**: the
-  technical documentation and README describe the features as actually
-  implemented in `script.js` and `styles.css`, not a generic description of
-  what such a feature could look like.
-- **This report describes this conversation's real work** — the filter, the
-  advice widget, and the reveal animation — not invented example exchanges.
+**Benefits**
+- A working implementation of all three required feature types in one pass.
+- A suggestion for a public API that needs no key and works from a browser.
+- Consistent structure with the Assignment 1 files and documentation.
 
-**Understanding check.** I can explain, without looking anything up: why
-`fetch()` needs to be raced against a timeout `Promise` rather than given a
-timeout option directly, why the project filter adds its visibility class a
-frame after removing `hidden` instead of in the same step, and why
-`unobserve()` is called inside the scroll-reveal's `IntersectionObserver`
-callback.
+**Challenges**
+- The AI's environment cannot reach external sites, so the advice API was
+  confirmed separately (its response has the shape the code expects) and
+  mocked in an automated headless-Chromium test. The test covered the filter,
+  the advice widget (success, failure, timeout, cached fallback), form
+  validation, theme persistence, the lightbox, the scroll reveal, a 375 px
+  phone layout, and the page with JavaScript disabled. All checks passed. The
+  test script is included in the AI Evidence ZIP.
+- Earlier AI-drafted versions of this report and of the technical documentation
+  contained statements about my own process and testing that did not happen.
+  They were removed in this revision.
+- Claude chose the features and the filter categories; I accepted them rather
+  than designing them myself.
+
+## Key mechanisms in the new code
+
+- `Promise.race()` against a timeout, because `fetch()` has no timeout option
+- `requestAnimationFrame` before adding the visibility class to a card that was
+  just un-hidden, so the CSS transition plays
+- A 250 ms delay before hiding filtered-out cards, matching the CSS transition
+- `IntersectionObserver` with `unobserve()` so the reveal runs once
+- `localStorage` reads and writes wrapped in `try/catch`
+- A `<noscript>` rule so content stays visible when JavaScript is blocked
+
+## Responsible use
+
+- All AI-generated files are listed in the Usage Log.
+- AI-assisted commits carry an `Assisted-by: Claude (Sonnet 5)` line in the
+  commit message.
+- The AI Evidence ZIP (full conversations and the files as the AI produced
+  them) is submitted on Blackboard and is not committed to this repository.

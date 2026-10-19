@@ -480,10 +480,12 @@ a:hover { text-decoration-color: var(--accent); }
    the earlier version hid it completely, leaving no way to jump to a
    section except scrolling. */
 @media (max-width: 34rem) {
+  .nav { flex-wrap: wrap; row-gap: .5rem; }
   .nav__list {
-    gap: .75rem;
-    font-size: .85rem;
-    overflow-x: auto;
+    order: 3;              /* drop below the logo and theme button */
+    width: 100%;
+    justify-content: space-between;
+    font-size: .9rem;
   }
   .hero__tagline { font-size: var(--step-0); }
   .project { max-width: none; }

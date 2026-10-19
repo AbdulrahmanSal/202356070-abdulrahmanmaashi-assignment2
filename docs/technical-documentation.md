@@ -118,7 +118,7 @@ if scripting is unavailable.
 The HTML landmark structure, design-token system, theme toggle, time-of-day
 greeting, nav highlighting, lightbox, form validation, responsive
 breakpoints, and browser-compatibility notes are unchanged from Assignment 1
-— see the project history or ask if you need those details restated.
+and are not repeated in this document.
 
 ## Known limitations and next steps
 
@@ -129,6 +129,9 @@ breakpoints, and browser-compatibility notes are unchanged from Assignment 1
 - The project filter's categories (Java/Python/Verilog) are hand-matched to
   the three current projects; adding a project in a new language needs both
   a new `data-tags` value and a new filter button.
-- No automated tests — checks were manual: toggling the filter, disconnecting
-  the network to trigger the advice widget's error and cached-tip paths, and
-  resizing the viewport as in Assignment 1.
+- There is no automated test suite in this repository. Before submission the
+  features were checked with a one-off headless-browser script: the filter, the
+  advice widget (success, failure, timeout and cached fallback, with the API
+  mocked), form validation, theme persistence, the lightbox, the scroll reveal,
+  a 375 px phone layout, and the page with JavaScript disabled. The script is
+  kept with the AI evidence rather than in this repository.
